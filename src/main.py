@@ -29,6 +29,7 @@ barrier = {
 
 
 player_score = 0
+player_level = 1
 
 def draw_player(stdscr):
     stdscr.addstr(player.get("l"), player.get("c"), player.get('char'))
@@ -70,7 +71,7 @@ def draw_world(stdscr):
         if player.get("alive"):
             # Initialization
             stdscr.clear()
-            add_score_text(stdscr)
+            draw_score_and_level(stdscr)
             draw_enemy(stdscr)
             draw_player(stdscr)
             draw_barrier(stdscr)
@@ -92,23 +93,31 @@ def draw_world(stdscr):
             break
 
 def update_player_score():
-    global player_score
+    global player_score, player_level
     if ((player.get('c') == enemy.get('c')) or (player.get('c') == enemy.get('c') - 1) or (player.get('c') == enemy.get('c') + 1)) and (player.get('l') == enemy.get('l')):
         enemy.update({'alive': False})
         player_score += 1
         curses.beep()
+        if player_score % 10 == 0:
+            player_level = player_score // 10 + 1
+            barrier.update({'drawed': False,'count': barrier.get('count') + player_score}) # Increasing the degree of difficulty of the game based on the level
+            curses.flash()  # Flash screen to indicate level up
 
 # Check input and move player
 def move_player(key):
     new_l, new_c = player.get('l'), player.get('c')
     if key == ord('w'):
-        new_l -= 1
+        if new_l != 1:
+            new_l -= 1
     elif key == ord('s'):
-        new_l += 1
+        if new_l != curses.LINES - 2:
+            new_l += 1
     elif key == ord('a'):
-        new_c -= 1
+        if new_c != 1:
+            new_c -= 1
     elif key == ord('d'):
-        new_c += 1
+        if new_c != curses.COLS - 3:
+            new_c += 1
 
     # Check if the new position is within a 1-cell radius of a barrier
     too_close_to_barrier = False
@@ -121,9 +130,10 @@ def move_player(key):
     if not too_close_to_barrier:
         player.update({"l": new_l, "c": new_c})
 
-def add_score_text(stdscr):
+def draw_score_and_level(stdscr):
     score_text = f"Score: {player_score}"
-    stdscr.addstr(0, (curses.COLS // 2) - (len(score_text) // 2), score_text)
+    level_text = f"Level: {player_level}"
+    stdscr.addstr(0, (curses.COLS // 2) - ((len(score_text) // 2) + (len(level_text) // 2)), score_text + ' - ' + level_text)
 
 def main():
     curses.wrapper(draw_world)
