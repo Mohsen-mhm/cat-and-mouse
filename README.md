@@ -2,6 +2,9 @@
 
 - A simple terminal-based game where a cat chases a mouse while avoiding barriers.
 
+## Preview
+<img src="https://mohsen.sbs/assets/img/cat-and-mouse-preview.png"/>
+
 ## Getting Started
 
 - These instructions will get you a copy of the project up and running on your local machine.
