@@ -1,25 +1,31 @@
 # Cat and Mouse Game
 
-A simple terminal-based game where a cat chases a mouse while avoiding barriers.
+- A simple terminal-based game where a cat chases a mouse while avoiding barriers.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine.
+- These instructions will get you a copy of the project up and running on your local machine.
 
 ### Prerequisites
 
-You need to have Python installed on your machine.
+- You need to have Python installed on your machine.
 
 ### Installing
 
 1. Clone the repository:
+- using HTTPS:
 ```bash
-git clone https://github.com/mohsen-mhm/cat-and-mouse-game.git
+git clone https://github.com/Mohsen-mhm/cat-and-mouse.git
 ```
+- or use SSH:
+```bash
+git clone git@github.com:Mohsen-mhm/cat-and-mouse.git
+```
+
 
 2. Change directory to the project folder:
 ```bash
-cd cat-and-mouse-game/src
+cd cat-and-mouse/src
 ```
 
 3. Install dependencies (curses)
